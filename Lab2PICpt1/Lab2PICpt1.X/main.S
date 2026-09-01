@@ -29,6 +29,9 @@
 ; Reset Vector at 000h. Execution starts here after reset 
 PSECT resetVect,class=CODE,delta=2
 ResetVector:
+    NOP
+    NOP
+    NOP
     goto Setup
     
     
@@ -41,5 +44,11 @@ Setup:
     
 Main:
     // main goes here
+    
+    Delay:
+    
+    
+    
+    goto Delay
     goto Main
 End

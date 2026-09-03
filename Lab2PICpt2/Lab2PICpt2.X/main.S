@@ -6,7 +6,7 @@
 ; PIC16F883 Configuration Bit Settings
 
 ; Assembly source line config statements
-
+    
 ; CONFIG1
   CONFIG  FOSC = XT             ; Oscillator Selection bits (XT oscillator: Crystal/resonator on RA6/OSC2/CLKOUT and RA7/OSC1/CLKIN)
   CONFIG  WDTE = OFF            ; Watchdog Timer Enable bit (WDT disabled and can be enabled by SWDTEN bit of the WDTCON register)
@@ -29,6 +29,7 @@
 ; Reset Vector at 000h. Execution starts here after reset 
 PSECT resetVect,class=CODE,delta=2
 ResetVector:
+
     goto Setup
     
     
@@ -37,9 +38,30 @@ PSECT code,class=CODE,delta=2
 
 Setup:
     ; add device setup here
+    BSF  0x03, 06    ;
+    BSF  0x03, 05    ; Set bank 3 active
+    CLRF 0x189	    ; ANSELH analog/digital select portB pins as digital
+    
+    BSF  0x03, 06    ;
+    BCF  0x03, 5    ; Set bank 2 active
+    BSF  0x09, 1    ; Turn T1G-not function off
+    BCF  0x0B, 0    ; Turn INTCON RBIF flag off, other bits are default off
+    
+    BCF  0x03, 06    ;
+    BSF  0x03, 05    ; Set bank 1 active 
+    CLRF 0x06	    ; TristB sets all portB pins as outputs
+		    
+    BCF  0x03, 06    ;
+    BCF  0x03, 05    ; Set bank 0 active
+    CLRF 0x07	    ; CCP1CON capture/compare/PWM off
+    
+		    ; OPTION_REG RBPU-not is default high meaning disabled
+		    ; WPUB weak pull ups default disabled
+		    ; IOCB portB interrupt-on-change disabled default
     goto Main
     
 Main:
     // main goes here
+    INCF 0x06, 1    ; Bank 0 is already active, increment portB on a loop
     goto Main
 End

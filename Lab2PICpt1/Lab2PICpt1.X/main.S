@@ -44,11 +44,5 @@ Setup:
     
 Main:
     // main goes here
-    
-    Delay:
-    
-    
-    
-    goto Delay
     goto Main
 End

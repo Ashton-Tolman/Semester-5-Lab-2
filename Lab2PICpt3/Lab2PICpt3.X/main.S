@@ -37,6 +37,39 @@ PSECT code,class=CODE,delta=2
 
 Setup:
     ; add device setup here
+    BSF  0x03, 6    ;
+    BSF  0x03, 5    ; Set bank 3 active
+    CLRF 0x189	    ; ANSELH analog/digital select portB pins as digital
+    
+    BSF  0x03, 6    ;
+    BCF  0x03, 5    ; Set bank 2 active
+    BSF  0x09, 1    ; Turn T1G-not function off
+    BCF  0x0B, 0    ; Turn INTCON RBIF flag off, other bits are default off
+    
+    BCF  0x03, 6    ;
+    BSF  0x03, 5    ; Set bank 1 active 
+    CLRF 0x06	    ; TristB sets all portB pins as outputs
+		    
+    BCF  0x03, 6    ;
+    BCF  0x03, 5    ; Set bank 0 active
+    CLRF 0x07	    ; CCP1CON capture/compare/PWM off
+    
+		    ; OPTION_REG RBPU-not is default high meaning disabled
+		    ; WPUB weak pull ups default disabled
+		    ; IOCB portB interrupt-on-change disabled default
+		    
+    BSF  0x03, 6    ;
+    BSF  0x03, 5    ; Set bank 3 active
+    
+    BSF  0x03, 6    ;
+    BCF  0x03, 5    ; Set bank 2 active
+    
+    BCF  0x03, 6    ;
+    BSF  0x03, 5    ; Set bank 1 active 
+    
+    BCF  0x03, 6    ;
+    BCF  0x03, 5    ; Set bank 0 active
+    
     goto Main
     
 Main:

@@ -1,7 +1,7 @@
 // Ashton Tolman
 // RCET3373
-// First Program
-// git url if you have one
+// Lab2PICpt2
+// https://github.com/Ashton-Tolman/Semester-5-Lab-2.git
 
 ; PIC16F883 Configuration Bit Settings
 

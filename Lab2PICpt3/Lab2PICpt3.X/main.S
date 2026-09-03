@@ -1,6 +1,6 @@
 // Ashton Tolman
 // RCET3373
-// Lab2PICpt1
+// Lab2PICpt3
 // https://github.com/Ashton-Tolman/Semester-5-Lab-2.git
 
 ; PIC16F883 Configuration Bit Settings
@@ -29,9 +29,6 @@
 ; Reset Vector at 000h. Execution starts here after reset 
 PSECT resetVect,class=CODE,delta=2
 ResetVector:
-    NOP
-    NOP
-    NOP
     goto Setup
     
     
@@ -44,11 +41,5 @@ Setup:
     
 Main:
     // main goes here
-    
-    Delay:
-    
-    
-    
-    goto Delay
     goto Main
 End

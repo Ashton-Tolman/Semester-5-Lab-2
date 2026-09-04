@@ -66,10 +66,7 @@ Setup:
 Main:
     // main goes here
     
-    ;  0000    0000
-    ; Columns  Rows
     
-    ;Scanning phase
     BCF 0x03, 6	    ;
     BSF 0x03, 5	    ; Set bank 1 active
     
@@ -100,7 +97,7 @@ Main:
     BCF 0x03, 6	    ;
     BSF 0x03, 5	    ; Set bank 1 active
     ; Scan Row 2
-    MOVLW 0xFD		; Put 11111101 on the TrisB register making RB0 an output
+    MOVLW 0xFD		; Put 11111101 on the TrisB register making RB1 an output
     MOVWF 0x86		; Configure RB1 as an output
     BCF  0x03, 6    ;
     BCF  0x03, 5    ; Set bank 0 active
@@ -114,7 +111,7 @@ Main:
     BCF 0x03, 6	    ;
     BSF 0x03, 5	    ; Set bank 1 active
     ; Scan Row 3
-    MOVLW 0xFB		; Put 11111011 on the TrisB register making RB0 an output
+    MOVLW 0xFB		; Put 11111011 on the TrisB register making RB2 an output
     MOVWF 0x86		; Configure RB2 as an output
     BCF  0x03, 6    ;
     BCF  0x03, 5    ; Set bank 0 active
@@ -142,7 +139,7 @@ Main:
     BCF 0x03, 6	    ;
     BSF 0x03, 5	    ; Set bank 1 active
     ; Scan Row 2
-    MOVLW 0xFD	    ; Put 11111101 on the TrisB register making RB0 an output
+    MOVLW 0xFD	    ; Put 11111101 on the TrisB register making RB1 an output
     MOVWF 0x86	    ; Configure RB1 as an output
     BCF  0x03, 6    ;
     BCF  0x03, 5    ; Set bank 0 active
@@ -166,7 +163,7 @@ Main:
     BCF 0x03, 6	    ;
     BSF 0x03, 5	    ; Set bank 1 active
     ; Scan Row 3
-    MOVLW 0xFB	    ; Put 11111011 on the TrisB register making RB0 an output
+    MOVLW 0xFB	    ; Put 11111011 on the TrisB register making RB2 an output
     MOVWF 0x86	    ; Configure RB2 as an output
     BCF  0x03, 6    ;
     BCF  0x03, 5    ; Set bank 0 active
@@ -190,7 +187,7 @@ Main:
     BCF 0x03, 6	    ;
     BSF 0x03, 5	    ; Set bank 1 active
     ; Scan Row 4
-    MOVLW 0xF7	    ; Put 11110111 on the TrisB register making RB0 an output
+    MOVLW 0xF7	    ; Put 11110111 on the TrisB register making RB3 an output
     MOVWF 0x86	    ; Configure RB3 as an output
     BCF  0x03, 6    ;
     BCF  0x03, 5    ; Set bank 0 active

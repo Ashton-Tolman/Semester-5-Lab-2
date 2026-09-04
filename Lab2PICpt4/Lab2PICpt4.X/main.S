@@ -41,7 +41,6 @@ Setup:
     BSF  0x03, 6    ;
     BSF  0x03, 5    ; Set bank 3 active
     CLRF 0x89	    ; ANSELH set low to make portB digital
-    BSF  0x81, 7    ; Enable portB weak pull up resistors
     
     BSF  0x03, 6    ;
     BCF  0x03, 5    ; Set bank 2 active
@@ -52,7 +51,9 @@ Setup:
     CLRF 0x87	    ; TrisC sets all portC pins as outputs
     MOVLW 0xFF	    ; Put all high literal into W
     MOVWF 0x86      ; Put all highs on TrisB to configure PortB as inputs
-    CLRF 0x95	    ; Set WPUB low to turn pull ups off
+    MOVLW 0xFF	    ; Put all high literal into W
+    MOVWF 0x95	    ; WPUB
+    BCF  0x81, 7    ; OPTION_REG
     
     BCF  0x03, 6    ;
     BCF  0x03, 5    ; Set bank 0 active
@@ -77,6 +78,8 @@ Main:
     MOVWF 0x86		; Configure RB0 as an output
     
     TestPnd:
+    BCF  0x03, 6    ;
+    BCF  0x03, 5    ; Set bank 0 active
 	BTFSC 0x06,5    ;Skip next instruction if RB5 is Low
 	GOTO TestStar   ;If RB5 low move to next test
 	GOTO DisplayPnd ;If RB5 high display #
@@ -91,38 +94,58 @@ Main:
 	GOTO TestC      ;If RB4 low move to next test
 	GOTO DisplayD   ;If RB4 high display D
     
+    
+    
+    TestC:
+    BCF 0x03, 6	    ;
+    BSF 0x03, 5	    ; Set bank 1 active
     ; Scan Row 2
     MOVLW 0xFD		; Put 11111101 on the TrisB register making RB0 an output
     MOVWF 0x86		; Configure RB1 as an output
-    
-    TestC:
+    BCF  0x03, 6    ;
+    BCF  0x03, 5    ; Set bank 0 active
 	BTFSC 0x06,4    ;Skip next instruction if RB4 is Low
 	GOTO TestB      ;If RB4 low move to next test
 	GOTO DisplayC   ;If RB4 high display C
     
+    
+    
+    TestB:
+    BCF 0x03, 6	    ;
+    BSF 0x03, 5	    ; Set bank 1 active
     ; Scan Row 3
     MOVLW 0xFB		; Put 11111011 on the TrisB register making RB0 an output
     MOVWF 0x86		; Configure RB2 as an output
-    
-    TestB:
+    BCF  0x03, 6    ;
+    BCF  0x03, 5    ; Set bank 0 active
 	BTFSC 0x06,4    ;Skip next instruction if RB4 is Low
 	GOTO TestA      ;If RB4 low move to next test
 	GOTO DisplayB   ;If RB4 high display B
     
-    ; Scan Row 4
-    MOVLW 0xF7	    ; Put 11110111 on the TrisB register making RB0 an output
-    MOVWF 0x86	    ; Configure RB3 as an output
+    
     
     TestA:
+    BCF 0x03, 6	    ;
+    BSF 0x03, 5	    ; Set bank 1 active
+     ; Scan Row 4
+    MOVLW 0xF7	    ; Put 11110111 on the TrisB register making RB3 an output
+    MOVWF 0x86	    ; Configure RB3 as an output
+    BCF  0x03, 6    ;
+    BCF  0x03, 5    ; Set bank 0 active
 	BTFSC 0x06,4    ;Skip next instruction if RB4 is Low
 	GOTO Test9      ;If RB4 low move to next test
 	GOTO DisplayA   ;If RB4 high display A
     
+    
+   
+    Test9:
+    BCF 0x03, 6	    ;
+    BSF 0x03, 5	    ; Set bank 1 active
     ; Scan Row 2
     MOVLW 0xFD	    ; Put 11111101 on the TrisB register making RB0 an output
     MOVWF 0x86	    ; Configure RB1 as an output
-   
-    Test9:
+    BCF  0x03, 6    ;
+    BCF  0x03, 5    ; Set bank 0 active
 	BTFSC 0x06,5    ;Skip next instruction if RB5 is Low
 	GOTO Test8      ;If RB5 low move to next test
 	GOTO Display9   ;If RB5 high display 9
@@ -137,11 +160,16 @@ Main:
 	GOTO Test6      ;If RB7 low move to next test
 	GOTO Display7   ;If RB7 high display 7
     
+    
+    
+    Test6:
+    BCF 0x03, 6	    ;
+    BSF 0x03, 5	    ; Set bank 1 active
     ; Scan Row 3
     MOVLW 0xFB	    ; Put 11111011 on the TrisB register making RB0 an output
     MOVWF 0x86	    ; Configure RB2 as an output
-    
-    Test6:
+    BCF  0x03, 6    ;
+    BCF  0x03, 5    ; Set bank 0 active
 	BTFSC 0x06,5    ;Skip next instruction if RB5 is Low
 	GOTO Test5      ;If RB5 low move to next test
 	GOTO Display6   ;If RB5 high display 6
@@ -156,11 +184,16 @@ Main:
 	GOTO Test3      ;If RB7 low move to next test
 	GOTO Display4   ;If RB7 high display 4
     
+    
+    
+    Test3:
+    BCF 0x03, 6	    ;
+    BSF 0x03, 5	    ; Set bank 1 active
     ; Scan Row 4
     MOVLW 0xF7	    ; Put 11110111 on the TrisB register making RB0 an output
     MOVWF 0x86	    ; Configure RB3 as an output
-    
-    Test3:
+    BCF  0x03, 6    ;
+    BCF  0x03, 5    ; Set bank 0 active
 	BTFSC 0x06,5    ;Skip next instruction if RB5 is Low
 	GOTO Test2      ;If RB5 low move to next test
 	GOTO Display3   ;If RB5 high display 3
@@ -175,11 +208,16 @@ Main:
 	GOTO Test0      ;If RB7 low move to next test
 	GOTO Display1   ;If RB7 high display 1
     
+    
+
+    Test0:
+    BCF 0x03, 6	    ;
+    BSF 0x03, 5	    ; Set bank 1 active
     ; Scan Row 1
     MOVLW 0xFE	    ; Put 11111110 on the TrisB register making RB0 an output
     MOVWF 0x86	    ; Configure RB0 as an output
-
-    Test0:
+    BCF  0x03, 6    ;
+    BCF  0x03, 5    ; Set bank 0 active
 	BTFSC 0x06,6    ;Skip next instruction if RB6 is Low
 	GOTO DisplayDol ;If RB6 low move to next test
 	GOTO Display0   ;If RB6 high display 0

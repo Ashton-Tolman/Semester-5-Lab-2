@@ -65,8 +65,6 @@ Setup:
     
 Main:
     // main goes here
-    
-    
     BCF 0x03, 6	    ;
     BSF 0x03, 5	    ; Set bank 1 active
     
